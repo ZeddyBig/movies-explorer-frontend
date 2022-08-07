@@ -25,7 +25,7 @@ export default class Register extends Component {
         evt.preventDefault();
         const fieldErrors = {
           ...this.state.fieldErrors,
-          [evt.target.name]: evt.target.validationMessage
+          [evt.target.name]: evt.target.validationMessage,
         };
     
         this.setState({ fieldErrors });
@@ -49,7 +49,7 @@ export default class Register extends Component {
                     <div className="register__form-top">
                         <p className="register__name">Имя</p>
                         <input 
-                            class={`register__input register__input_name ${fieldErrors.username ? "register__input_error-switch" : ""}`}
+                            className={`register__input register__input_name ${fieldErrors.username ? "register__input_error-switch" : ""}`}
                             type="text" 
                             name="username"
                             required 
@@ -57,27 +57,27 @@ export default class Register extends Component {
                             maxLength="40"
                         />
                         { fieldErrors.username && (
-                            <span className="register__input-error">Что-то пошло не так...</span>
+                            <span className="register__input-error">{fieldErrors.username}</span>
                         )}
                         <p className="register__name">E-mail</p>
                         <input 
-                            class={`register__input register__input_email ${fieldErrors.email ? "register__input_error-switch" : ""}`}
+                            className={`register__input register__input_email ${fieldErrors.email ? "register__input_error-switch" : ""}`}
                             type="email" 
                             name="email"
                             required
                         />
                         { fieldErrors.email && (
-                            <span className="register__input-error">Что-то пошло не так...</span>
+                            <span className="register__input-error">{fieldErrors.email}</span>
                         )}
                         <p className="register__name">Пароль</p>
                         <input
-                            class={`register__input register__input_password ${fieldErrors.password ? "register__input_error-switch" : ""}`}
+                            className={`register__input register__input_password ${fieldErrors.password ? "register__input_error-switch" : ""}`}
                             type="password"
                             name="password"
                             required
                         />
                         { fieldErrors.password && (
-                            <span className="register__input-error">Что-то пошло не так...</span>
+                            <span className="register__input-error">{fieldErrors.password}</span>
                         )}
                     </div>
                     

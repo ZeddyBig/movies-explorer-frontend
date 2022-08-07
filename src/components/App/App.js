@@ -2,6 +2,7 @@ import './App.css';
  import { Route, Routes } from 'react-router-dom';
 import Main from '../Main/Main';
 import Register from '../Register/Register';
+import Login from '../Login/Login';
 
 const App = () => {
   return (
@@ -12,6 +13,9 @@ const App = () => {
         } />
         <Route path="/signup" element={
           <Register />
+        } />
+        <Route path="/signin" element={
+          <Login />
         } />
       </Routes>
     </div>
