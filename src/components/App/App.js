@@ -1,11 +1,19 @@
 import './App.css';
-// import { Route, Routes } from 'react-router-dom';
+ import { Route, Routes } from 'react-router-dom';
 import Main from '../Main/Main';
+import Register from '../Register/Register';
 
 const App = () => {
   return (
     <div className="App">
-      <Main />
+      <Routes>
+        <Route path="/" element={
+          <Main />
+        } />
+        <Route path="/signup" element={
+          <Register />
+        } />
+      </Routes>
     </div>
   );
 }
