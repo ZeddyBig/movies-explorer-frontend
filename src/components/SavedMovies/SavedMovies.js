@@ -4,15 +4,15 @@ import Preloader from "../Preloader/Preloader";
 import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 
-function Movies(props) {
+function SavedMovies(props) {
     return (
-        <section className="movies">
-            <Header isLoggedIn={props.isLoggedIn} isMovies={props.isMovies} />
+        <section className="saved-movies">
+            <Header isLoggedIn={props.isLoggedIn} isSavedMovies={props.isSavedMovies} />
             <SearchForm />
-            <MoviesCardList isSaved={false} />
+            <MoviesCardList isSaved={true} />
             <Footer />
         </section>
     )
 }
 
-export default Movies;
+export default SavedMovies;

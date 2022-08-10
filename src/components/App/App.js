@@ -6,6 +6,7 @@ import Login from '../Login/Login';
 import NotFound from '../NotFound/NotFound';
 import Profile from '../Profile/Profile';
 import Movies from '../Movies/Movies';
+import SavedMovies from '../SavedMovies/SavedMovies';
 
 const App = () => {
 
@@ -22,6 +23,9 @@ const App = () => {
         } />
         <Route path="/movies" element={
           <Movies isLoggedIn={loggedIn} isMovies={true} />
+        } />
+        <Route path="/saved-movies" element={
+          <SavedMovies isLoggedIn={loggedIn} isSavedMovies={true} />
         } />
         <Route path="/signup" element={
           <Register />

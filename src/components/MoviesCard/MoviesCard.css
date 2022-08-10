@@ -1,0 +1,52 @@
+.movies-card {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 360px;
+}
+
+.movies-card__movie-container {
+    width: 360px;
+    height: 201px;
+    border-radius: 6px;
+}
+
+.movies-card__movie-img {
+    width: 360px;
+    height: 201px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.movies-card__movie-description {
+    padding: 0 14px;
+    margin: 14px 0 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.movies-card__movie-title {
+    padding: 0;
+    margin: 0;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 16px;
+    max-width: 250px;
+}
+
+.movies-card__movie-duration {
+    max-height: 10px;
+    padding: 3px 4px;
+    margin: 0;
+    border-radius: 3px;
+    background: #2F2F2F;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 10px;
+    align-items: center;
+    text-align: center;
+    color: #8B8B8B;
+}
