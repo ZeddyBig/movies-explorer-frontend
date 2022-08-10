@@ -7,7 +7,7 @@ export default class Register extends Component {
         fields: {},
         fieldErrors: {}
     };
-
+    
     handleSubmit = evt => {
         evt.preventDefault();
     };

@@ -19,10 +19,13 @@
 }
 
 .header__movies_nav {
-    display: none; /* Переключатель видимости: flex/none */
+    display: flex; /* Переключатель видимости: flex/none */
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
 }
 
 .header__movies {
@@ -76,7 +79,7 @@
 }
 
 .header__account {
-    display: none; /* Переключатель видимости: block/none */
+    display: block; /* Переключатель видимости: block/none */
     text-decoration: none;
     font-weight: 500;
     font-size: 14px;
@@ -85,4 +88,12 @@
     background-color: #313131;
     border-radius: 20px;
     padding: 8px 20px;
+}
+
+.header__disable-block {
+    display: none;
+}
+
+.header__bold {
+    font-weight: 500;
 }

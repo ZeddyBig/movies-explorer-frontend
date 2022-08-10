@@ -1,11 +1,11 @@
 import promoImage from '../../../images/promo__image.svg';
 import Header from "../../Common/Header/Header";
 
-function Promo() {
+function Promo(props) {
     return (
         <section className="promo">
             <div className="promo__width">
-                <Header />
+                <Header isLoggedIn={props.isLoggedIn}/>
                 <div className="promo__offer">
                     <div className="promo__title-subtitle">
                         <h1 className="promo__title">

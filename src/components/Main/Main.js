@@ -5,10 +5,10 @@ import AboutMe from './AboutMe/AboutMe';
 import Portfolio from './Portfolio/Portfolio';
 import Footer from '../Common/Footer/Footer';
 
-function Main() {
+function Main(props) {
     return (
         <section className="main">
-            <Promo />
+            <Promo isLoggedIn={props.isLoggedIn}/>
             <AboutProject />
             <Techs />
             <AboutMe />
