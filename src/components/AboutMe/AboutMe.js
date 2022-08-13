@@ -1,4 +1,4 @@
-import image from '../../../images/about-me__content-picture.png';
+import image from '../../images/about-me__content-picture.png';
 
 function AboutMe() {
     return (

@@ -25,7 +25,7 @@ function AboutProject() {
             </div>
             <div className="about-project__weeks">
                 <div className="about-project__week-one">1 неделя</div>
-                <div className="about-project__week-four">4 неделя</div>
+                <div className="about-project__week-four">4 недели</div>
                 <div className="about-project__weeks-under">Back-end</div>
                 <div className="about-project__weeks-under">Front-end</div>
             </div>

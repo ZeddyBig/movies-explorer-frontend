@@ -53,3 +53,9 @@
     margin-left: 14px;
 }
 
+@media screen and (max-width: 520px) {
+    .filterCheckbox {
+        border: none;
+        margin: 45px auto 0;
+    }
+}

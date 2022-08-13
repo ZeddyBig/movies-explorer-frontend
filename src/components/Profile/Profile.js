@@ -27,8 +27,8 @@ function Profile(props) {
     function saveProfile (evt) {
         evt.preventDefault();
         setEditMode(false);
-        nameInput.current.disabled = false;
-        emailInput.current.disabled = false;
+        nameInput.current.setAttribute("disabled", "");
+        emailInput.current.setAttribute("disabled", "");
     }
 
     return (

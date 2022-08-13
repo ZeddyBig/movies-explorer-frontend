@@ -1,15 +1,15 @@
-import promoImage from '../../../images/promo__image.svg';
-import Header from "../../Common/Header/Header";
+import promoImage from '../../images/promo__image.svg';
+import Header from "../Common/Header/Header";
 
 function Promo(props) {
     return (
         <section className="promo">
+            <Header isLoggedIn={props.isLoggedIn} isMain={props.isMain}/>
             <div className="promo__width">
-                <Header isLoggedIn={props.isLoggedIn}/>
                 <div className="promo__offer">
                     <div className="promo__title-subtitle">
                         <h1 className="promo__title">
-                            Учебный проект студента факультета <br/> Веб-разработки.
+                            Учебный проект студента факультета Веб&#8209;разработки.
                         </h1>
                         <p className="promo__subtitle">
                             Листайте ниже, чтобы узнать больше про этот проект и его создателя.

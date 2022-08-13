@@ -16,7 +16,7 @@ const App = () => {
     <div className="App">
       <Routes>
         <Route path="/" element={
-          <Main isLoggedIn={!loggedIn} />
+          <Main isLoggedIn={!loggedIn} isMain={true}/>
         } />
         <Route path="/profile" element={
           <Profile isLoggedIn={loggedIn} />

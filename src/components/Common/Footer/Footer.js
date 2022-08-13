@@ -14,9 +14,13 @@ function Footer() {
                         <a rel='noopener noreferrer' target='_blank' href="https://practicum.yandex.ru/" className="footer__link">
                             Яндекс.Практикум
                         </a>
+                    </li>
+                    <li className="footer__link-block">
                         <a rel='noopener noreferrer' target='_blank' href="https://github.com/ZeddyBig" className="footer__link">
                             Github
                         </a>
+                    </li>
+                    <li className="footer__link-block">
                         <a rel='noopener noreferrer' target='_blank' href="https://vk.com/zeddybig" className="footer__link">
                             Вконтакте
                         </a>

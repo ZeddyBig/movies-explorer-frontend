@@ -47,10 +47,10 @@
 .register__input {
     background: 0;
     border: 0;
-	margin: 0 0 24px;
+	margin: 0 0 19px;
 	padding: 0 0 10px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 500;
     font-size: 14px;
     line-height: 17px;
     width: 100%;
@@ -89,7 +89,9 @@
 .register__form-button {
     margin: 0 0 16px;
     border: 0;
-    padding: 13px 125px 15px;
+    width: 396px;
+    height: 45px;
+    padding: 0;
     background-color: #4285F4;
     border-radius: 3px;
     font-weight: 500;
@@ -135,4 +137,49 @@
 
 .register__signin-link:hover {
     opacity: 0.7;
+}
+
+@media screen and (max-width: 769px) {
+    .register {
+        padding: 232px 0;
+    }
+}
+
+@media screen and (max-width: 440px) {
+    .register {
+        max-width: 260px;
+        padding: 56px 0 30px;
+        align-items: center;
+    }
+
+    .register__logo {
+        margin-bottom: 50px;
+    }
+
+    .register__title {
+        margin: 0 0 80px;
+    }
+
+    .register__form {
+        min-height: 497px;
+        width: 100%;
+    }
+
+    .register__form-button {
+        margin: 0 0 14px;
+        width: 100%;
+        font-size: 12px;
+        line-height: 15px;
+    }
+
+    .register__signin-text {
+        margin: 0 7px 0 0;
+        font-size: 12px;
+        line-height: 15px;
+    }
+
+    .register__signin-link {
+        font-size: 12px;
+        line-height: 15px;
+    }
 }

@@ -3,3 +3,16 @@
     max-width: 1140px;
     margin: 0 auto;
 }
+
+@media screen and (max-width: 1279px) { 
+    .movies {
+        padding: 0 30px;
+        max-width: 100%;
+    }
+}
+
+@media screen and (max-width: 520px) {
+    .movies {
+        padding: 0 10px;
+    }
+}
