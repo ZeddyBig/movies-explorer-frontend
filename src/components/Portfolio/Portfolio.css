@@ -28,10 +28,18 @@
     padding-bottom: 0;
 }
 
-.portfolio__name-and-link {
+.portfolio__link {
     display: flex;
     justify-content: space-between;
     flex-direction: row;
+    text-decoration: none;
+    color: #FFF;
+    opacity: 1;
+	transition: opacity 0.5s ease;
+}
+
+.portfolio__link:hover {
+    opacity: 0.7;
 }
 
 .portfolio__name {
@@ -44,20 +52,15 @@
     letter-spacing: -0.04em;
 }
 
-.portfolio__link {
+.portfolio__arrow {
+    padding: 0;
+    margin: 0;
     font-style: normal;
     font-weight: 400;
     font-size: 30px;
     line-height: 60px;
     letter-spacing: -0.04em;
-    text-decoration: none;
     color: #FFF;
-    opacity: 1;
-	transition: opacity 0.5s ease;
-}
-
-.portfolio__link:hover {
-    opacity: 0.7;
 }
 
 .portfolio__line {
@@ -75,7 +78,7 @@
         font-size: 28px;
     }
 
-    .portfolio__link {
+    .portfolio__arrow {
         font-size: 28px;
     }
 }
@@ -96,7 +99,7 @@
         letter-spacing: -0.04em;
     }
 
-    .portfolio__link {
+    .portfolio__arrow {
         font-size: 18px;
         line-height: 28px;
         letter-spacing: -0.04em;

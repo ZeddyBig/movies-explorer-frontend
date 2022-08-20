@@ -6,12 +6,12 @@ import MoviesCardList from "../MoviesCardList/MoviesCardList";
 
 function Movies(props) {
     return (
-        <section className="movies">
+        <main className="movies">
             <Header isLoggedIn={props.isLoggedIn} isMovies={props.isMovies} />
             <SearchForm />
             <MoviesCardList isSaved={false} />
             <Footer />
-        </section>
+        </main>
     )
 }
 

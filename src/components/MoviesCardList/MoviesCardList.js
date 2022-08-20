@@ -31,7 +31,7 @@ function MoviesCardList(props) {
                 <MoviesCard thumbnail={movie12} title={'По волнам: Искусство звука в кино'} duration={'1ч 17м'} shortFilm={true} isSaved={props.isSaved}/>
             </ul>
             <div className="movies-card-list__more">
-                <button className={`movies-card-list__more-button ${props.isSaved ? `movies-card-list__disable` : ``}`}>Ещё</button>
+                <button type="button" className={`movies-card-list__more-button ${props.isSaved ? `movies-card-list__disable` : ``}`}>Ещё</button>
             </div>
         </div>
     )

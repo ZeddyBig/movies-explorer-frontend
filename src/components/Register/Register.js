@@ -34,7 +34,7 @@ export default class Register extends Component {
     render() {
         const { fieldErrors } = this.state;
         return (
-            <section className="register">
+            <main className="register">
                 <Link to={"/"} className="register__logo">
                     <img src={logo} alt="Логотип" className="register__logo-image"/>
                 </Link>
@@ -93,7 +93,7 @@ export default class Register extends Component {
                         </div>
                     </div>
                 </form>
-            </section>
+            </main>
         )
     }
 }

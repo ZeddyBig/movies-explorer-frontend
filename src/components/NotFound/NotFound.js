@@ -5,7 +5,7 @@ function NotFound() {
     const history = useNavigate();
 
     return (
-        <section className="not-found">
+        <main className="not-found">
             <div className="not-found__message">
                 <h1 className="not-found__title">
                     404
@@ -14,8 +14,8 @@ function NotFound() {
                     Страница не найдена
                 </p>
             </div>
-            <button onClick={() => history(-1)} className='not-found__back'>Назад</button>
-        </section>
+            <button type="button" onClick={() => history(-1)} className='not-found__back'>Назад</button>
+        </main>
     )
 }
 

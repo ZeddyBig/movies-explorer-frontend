@@ -7,14 +7,14 @@ import Footer from '../Common/Footer/Footer';
 
 function Main(props) {
     return (
-        <section className="main">
+        <main className="main">
             <Promo isLoggedIn={props.isLoggedIn} isMain={props.isMain}/>
             <AboutProject />
             <Techs />
             <AboutMe />
             <Portfolio />
             <Footer />
-        </section>
+        </main>
     )
 }
 

@@ -59,7 +59,7 @@ function Profile(props) {
                         <button type="submit" className={`profile__submit-button ${editMode ? '' : 'profile__disable'}`}>Сохранить</button>
                     </div>
                     <div className={`profile__footer ${editMode ? 'profile__disable' : ''}`}>
-                        <button className="profile__footer-button" type="button" onClick={editProfile}>Редактировать</button>
+                        <button type="button" className="profile__footer-button" onClick={editProfile}>Редактировать</button>
                         <Link to='/' className="profile__footer-link">Выйти из аккаунта</Link>
                     </div>
                 </form>

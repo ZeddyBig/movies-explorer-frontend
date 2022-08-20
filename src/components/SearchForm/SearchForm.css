@@ -21,9 +21,11 @@
     width: 34px;
     height: 34px;
     object-fit: contain;
+    margin-right: 10px;
 }
 
 .search-form__input {
+    padding: 0;
     width: 100%;
     font-style: normal;
     font-weight: 400;
@@ -32,10 +34,15 @@
     background: 0;
     border: 0;
     color: #FFF;
+    border-bottom: 0px solid transparent;
+    border-top: 0px solid transparent;
+    transition: border-bottom 0.5s ease, border-top 0.5s ease;
 }
 
 .search-form__input:focus {
     outline: none;
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid #4285F4;
 }
 
 .search-form__button {

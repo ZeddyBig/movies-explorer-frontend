@@ -13,11 +13,11 @@ function MoviesCard({ thumbnail, title, duration, shortFilm, isSaved }) {
         <li className="movies-card">
             <div className="movies-card__movie-container">
                 <div className={`movies-card__button_block ${isSaved ? `movies-card__disable` : ``}`}>
-                    <button className={`movies-card__button ${Added ? `movies-card__disable` : ``}`} onClick={handleClick}>Сохранить</button>
+                    <button type="button" className={`movies-card__button ${Added ? `movies-card__disable` : ``}`} onClick={handleClick}>Сохранить</button>
                     <img src={movieAddedIcon} alt="Фильм добавлен" className={`movies-card__added ${Added ? `` : `movies-card__disable`}`} />
                 </div>
                 <div className={`movies-card__button_block ${isSaved ? `` : `movies-card__disable`}`}>
-                    <button className="movies-card__delete-button">
+                    <button type="button" className="movies-card__delete-button">
                         <img src={deleteMovieIcon} alt={`Удалить фильм`} className="movies-card__delete-button-img" />
                     </button>
                 </div>
