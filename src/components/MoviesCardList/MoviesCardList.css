@@ -22,6 +22,11 @@
     gap: 58px 30px;
 }
 
+.movies-card-list_zero {
+    margin: 10px 0;
+    padding: 0;
+}
+
 .movies-card-list__more {
     display: flex;
     min-height: 166px;
@@ -51,10 +56,6 @@
     opacity: 0.7;
 }
 
-.movies-card-list__disable {
-    display: none;
-}
-
 @media screen and (max-width: 1279px) {
     .movies-card-list__list {
         grid-template-columns: 1fr 1fr;
@@ -79,4 +80,8 @@
     .movies-card-list__more-button {
         min-width: 240px;
     }
+}
+
+.movies-card-list__disable {
+    display: none;
 }

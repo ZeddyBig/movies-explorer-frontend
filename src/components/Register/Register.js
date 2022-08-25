@@ -65,7 +65,8 @@ const Register = (props) => {
                     <button 
                         type="submit"
                         disabled={!isValid ? true : false}
-                        className="register__form-button">
+                        className="register__form-button"
+                    >
                             Зарегистрироваться
                     </button>
                     <div className="register__signin">

@@ -30,7 +30,7 @@ class MainApi {
         .then(res => this._getResponseData(res))
     }
 
-    getMovies() {
+    getSavedMovies() {
         return fetch(`${this._baseUrl}/movies`, {
             credentials: 'include',
             headers: this._headers
@@ -51,7 +51,7 @@ class MainApi {
                 description: obj.description,
                 image: `https://api.nomoreparties.co/${obj.image.url}`,
                 trailerLink: obj.trailerLink,
-                thumbnail: `https://api.nomoreparties.co/${obj.formats.image.url}`,
+                thumbnail: `https://api.nomoreparties.co/${obj.image.formats.thumbnail.url}`,
                 movieId: obj.id,
                 nameRU: obj.nameRU,
                 nameEN: obj.nameEN,
