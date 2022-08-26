@@ -2,13 +2,11 @@ import React, { useState } from "react";
 import movieAddedIcon from "../../images/movie-added.svg";
 import deleteMovieIcon from "../../images/delete-movie.svg"
 
-function MoviesCard({ thumbnail, title, duration, isSavedMovies, isMovies, handleSaveMovie, movie, handleDeleteMovie }) {
+function MoviesCard({ thumbnail, title, duration, isSavedMovies,
+    handleSaveMovie, movie, id, movies, handleDeleteMovie }) {
+    
     const [added, setAdded] = useState(movie.isSaved);
     const [icon, setIcon] = useState(movieAddedIcon);
-
-    if (isSavedMovies) {
-        movie.isSaved = true;
-    } 
 
     const handleSave = (e) => {
         e.preventDefault();
@@ -18,10 +16,9 @@ function MoviesCard({ thumbnail, title, duration, isSavedMovies, isMovies, handl
 
     const handleDelete = (e) => {
         e.preventDefault();
-        setAdded(false);
         handleDeleteMovie(movie._id);
     }
-
+    
     const mouseEnter = () => {
         setIcon(deleteMovieIcon);
     }
@@ -38,8 +35,8 @@ function MoviesCard({ thumbnail, title, duration, isSavedMovies, isMovies, handl
                     <img src={movieAddedIcon} alt="Фильм добавлен" className={`movies-card__added ${added ? `` : `movies-card__disable`}`} />
                 </div>
                 <div className={`movies-card__button_block ${added ? `` : `movies-card__disable`}`}>
-                    <button type="button" onClick={isMovies ? ((e) => (e)) : handleDelete} className="movies-card__delete-button">
-                        <img src={icon} onMouseEnter={isMovies ? ((e) => (e)) : mouseEnter} onMouseLeave={mouseLeave} alt={`Удалить фильм`} className="movies-card__delete-button-img" />
+                    <button type="button" onClick={!isSavedMovies ? ((e) => (e)) : handleDelete} className="movies-card__delete-button">
+                        <img src={icon} onMouseEnter={!isSavedMovies ? ((e) => (e)) : mouseEnter} onMouseLeave={mouseLeave} alt={`Удалить фильм`} className="movies-card__delete-button-img" />
                     </button>
                 </div>
                 <img className='movies-card__movie-img' src={thumbnail} alt='Карточка фильма' />

@@ -1,10 +1,20 @@
+import { useState } from "react";
 import searchIcon from "../../images/search__icon.svg";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 
 function SearchForm(props) {
     const handleSubmit = (e) => {
         e.preventDefault();
-        props.searchMovieList(props.movies);
+        if (!props.isSavedMovies) {
+            props.setFilteredMovies(props.searchMovieList(props.movies));
+        } else {
+            props.searchSavedMovieList(props.movies);
+        }
+    }
+
+    const handleChange = (e) => {
+        const { value } = e.target;
+        props.setSearchValue(value);
     }
 
     return (
@@ -14,12 +24,15 @@ function SearchForm(props) {
                 <input 
                     className="search-form__input"
                     placeholder="Фильм"
-                    required
-                    onChange={(e) => props.setSearchValue(e.target.value)}
+                    value={props.searchValue || ''}
+                    onChange={handleChange}
                 />
                 <button type="submit" className="search-form__button">Найти</button>
             </form>
-            <FilterCheckbox shortMovieChange={props.shortMovieChange}/>
+            <FilterCheckbox
+                shortMovieSwitch={props.shortMovieSwitch}
+                shortMovieChange={props.shortMovieChange}
+            />
         </div>
     )
 }

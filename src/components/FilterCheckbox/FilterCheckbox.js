@@ -1,6 +1,10 @@
 import React from 'react';
 
 function FilterCheckbox(props) {
+    const handleChange = (e) => {
+        const { checked } = e.target;
+        props.shortMovieChange(checked);
+    }
 
     return (
         <div className="filterCheckbox">
@@ -8,7 +12,8 @@ function FilterCheckbox(props) {
                 className='filterCheckbox__input'
                 type='checkbox'
                 id='shortMovie'
-                onChange={(e) => props.shortMovieChange(e.target.checked)}
+                checked={props.shortMovieSwitch}
+                onChange={handleChange}
             />
             <p className='filterCheckbox__label'>Короткометражки</p>
         </div>

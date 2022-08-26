@@ -9,17 +9,25 @@ function SavedMovies(props) {
         <main className="saved-movies">
             <Header isLoggedIn={props.isLoggedIn} isSavedMovies={props.isSavedMovies} />
             <SearchForm 
+                setFilteredMovies={props.setFilteredMovies}
                 movies={props.movies}
+                isSavedMovies={props.isSavedMovies}
                 setSearchValue={props.setSearchValue}
+                shortMovieSwitch={props.shortMovieSwitch}
                 shortMovieChange={props.shortMovieChange}
                 searchMovieList={props.searchMovieList}
+                searchValue={props.searchValue}
+                searchSavedMovieList={props.searchSavedMovieList}
             />
             <MoviesCardList
+                filteredMovies={props.filteredMovies}
+                setFilteredMovies={props.setFilteredMovies}
                 isSavedMovies={props.isSavedMovies}
                 isMovies={props.isMovies}
                 movies={props.movies}
                 searchMovieList={props.searchMovieList}
                 handleDeleteMovie={props.handleDeleteMovie}
+                searchSavedMovieList={props.searchSavedMovieList}
             />
             <Footer />
         </main>

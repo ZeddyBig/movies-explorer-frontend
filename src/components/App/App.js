@@ -12,6 +12,7 @@ import { moviesApi } from '../../utils/MoviesApi';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import * as moviesAuth from '../../utils/moviesAuth';
 import ProtectedRoute from '../../utils/ProtectedRoute';
+import checkSavedMovies from '../../utils/checkSavedMovies';
 
 const App = () => {
 
@@ -25,6 +26,16 @@ const App = () => {
   const [searchValue, setSearchValue] = useState('');
   const [shortMovieSwitch, setShortMovieSwitch] = useState(false);
   const [savedMovies, setSavedMovies] = useState([]);
+  const [filteredMovies, setFilteredMovies] = useState([]);
+
+  const fetchMovies = () => {
+    moviesApi.getMovies()
+      .then((res) => {
+        setMovies(res);
+        localStorage.setItem('movies', JSON.stringify(res));
+      })
+      .catch((err) => console.log(err));
+  }
 
   useEffect(() => {
     if (loggedIn) {
@@ -40,14 +51,25 @@ const App = () => {
             setSavedMovies((state) => state.filter((movie) => movie.owner === currentUser.id));
           })
           .catch((err) => console.log(err)); 
-        
-        moviesApi.getMovies()
-          .then((res) => {
-              setMovies(res);
-          })
-          .catch((err) => console.log(err));       
+
+        const localMovies = localStorage.getItem('movies');
+        if (localMovies) {
+          try {
+            setMovies(JSON.parse(localMovies));
+          } catch (err) {
+            console.log('Parse error: ', err);
+            localStorage.removeItem('movies');
+            fetchMovies();
+          }
+        } else {
+          fetchMovies();
+        }
     }
   }, [loggedIn]);
+
+  savedMovies.map((movieSaved) => (
+    movieSaved.isSaved = true
+  ))
 
   const handleRegister = ({ name, email, password }) => {
     return moviesAuth.register(name, email, password).then((res) => {
@@ -124,31 +146,15 @@ const App = () => {
     history('/signin');
   }
 
-  function checkSavedMovie(newMovie, movies) {
-    return (movies.some((movie) => (movie.movieId === newMovie.id.toString())));
-  }
-
-  function checkMovies(movies, savedMovies) {
-    movies.map((movie) => (
-      checkSavedMovie(movie, savedMovies) ? movie.isSaved = true : movie.isSaved = false
-    ))
-  }
-  checkMovies(movies, savedMovies);
-
   const handleSaveMovie = (movie) => {
-    if (!checkSavedMovie(movie, savedMovies)) {
-      mainApi.saveMovie(movie)
-      .then((savedMovie) => {
-        setSavedMovies([savedMovie, ...savedMovies])
-      })
-      .catch((err) => console.log(err));
-    } else {
-      movie.isSaved = true;
-    }
+    mainApi.saveMovie(movie)
+    .then((savedMovie) => {
+      setSavedMovies([savedMovie, ...savedMovies])
+    })
+    .catch((err) => console.log(err));
   }
 
   const handleDeleteMovie = (id) => {
-    console.log(id);
     mainApi.deleteMovie(id)
       .then((res) => {
         setSavedMovies((state) => state.filter((movie) => movie._id !== id));
@@ -165,15 +171,59 @@ const App = () => {
     )
   }
 
-  function searchMovieList(movieList) {
-    return movieList.filter(movie => {
-      return (
-        shortMovieSwitch
-        ? (movie.nameRU.toLowerCase().includes(searchValue.toLowerCase())) && (isShortMovie(movie))
-        : movie.nameRU.toLowerCase().includes(searchValue.toLowerCase())
-      )
-    });
+  function searchSavedMovieList(movieList) {
+    if (searchValue === '') {
+      return movieList.filter(movie => {
+        return (
+          shortMovieSwitch
+          ? (movie) && (isShortMovie(movie))
+          : movie
+        )
+      })
+    } else {
+      return movieList.filter(movie => {
+        return (
+          shortMovieSwitch
+          ? (movie.nameRU.toLowerCase().includes(searchValue.toLowerCase())) && (isShortMovie(movie))
+          : movie.nameRU.toLowerCase().includes(searchValue.toLowerCase())
+        )
+      })
+    }
   }
+
+  function searchMovieList(movieList) {
+    if (searchValue === '') {
+      return movieList.filter(movie => {
+        movie.isSaved = checkSavedMovies(movie.id, savedMovies);
+        return (
+          shortMovieSwitch
+          ? (movie) && (isShortMovie(movie))
+          : movie
+        )
+      })
+    } else {
+      return movieList.filter(movie => {
+        movie.isSaved = checkSavedMovies(movie.id, savedMovies);
+        return (
+          shortMovieSwitch
+          ? (movie.nameRU.toLowerCase().includes(searchValue.toLowerCase())) && (isShortMovie(movie))
+          : movie.nameRU.toLowerCase().includes(searchValue.toLowerCase())
+        )
+      })
+    }
+  }
+
+  console.log(
+    filteredMovies.map((movie) => (
+      movie.isSaved
+    ))
+  );
+
+  console.log(
+    savedMovies.map((movieSaved) => (
+      movieSaved.isSaved = true
+    ))
+  );
 
   useEffect(() => {
     tokenCheck();
@@ -200,8 +250,14 @@ const App = () => {
                 isLoggedIn={loggedIn}
                 isMovies={true}
                 isSavedMovies={false}
+                filteredMovies={filteredMovies}
+                setFilteredMovies={setFilteredMovies}
                 movies={movies}
+                searchValue={searchValue}
                 setSearchValue={setSearchValue}
+                // Железно нужны
+                
+                shortMovieSwitch={shortMovieSwitch}
                 shortMovieChange={shortMovieChange}
                 handleSaveMovie={handleSaveMovie}
                 searchMovieList={searchMovieList}
@@ -215,8 +271,15 @@ const App = () => {
                 isLoggedIn={loggedIn}
                 isMovies={false}
                 isSavedMovies={true}
+                filteredMovies={filteredMovies}
+                setFilteredMovies={setFilteredMovies}
                 movies={savedMovies}
+                searchValue={searchValue}
                 setSearchValue={setSearchValue}
+                searchSavedMovieList={searchSavedMovieList}
+                // Железно нужны
+                
+                shortMovieSwitch={shortMovieSwitch}
                 shortMovieChange={shortMovieChange}
                 searchMovieList={searchMovieList}
                 handleDeleteMovie={handleDeleteMovie}
