@@ -13,6 +13,7 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import * as moviesAuth from '../../utils/moviesAuth';
 import ProtectedRoute from '../../utils/ProtectedRoute';
 import useCurrentWidth from '../../utils/useCurrentWidth';
+import checkSavedMovies from '../../utils/checkSavedMovies';
 
 const App = () => {
 
@@ -70,6 +71,10 @@ const App = () => {
 
   savedMovies.map((movieSaved) => (
     movieSaved.isSaved = true
+  ))
+
+  movies.map((movie) => (
+    movie.isSaved = checkSavedMovies(movie.id, savedMovies)
   ))
 
   const handleRegister = ({ name, email, password }) => {
@@ -150,15 +155,20 @@ const App = () => {
   const handleSaveMovie = (movie) => {
     mainApi.saveMovie(movie)
     .then((savedMovie) => {
-      setSavedMovies([...savedMovies, savedMovie])
+      setSavedMovies([...savedMovies, savedMovie]);
     })
     .catch((err) => console.log(err));
   }
 
+  const findId = (id) => {
+    let movieSaved = savedMovies.find((movie) => (movie.movieId === id.toString()));
+    return (movieSaved._id);
+  }
+
   const handleDeleteMovie = (id) => {
-    mainApi.deleteMovie(id)
+    mainApi.deleteMovie(findId(id))
       .then((res) => {
-        setSavedMovies((state) => state.filter((movie) => movie._id !== id));
+        setSavedMovies((state) => state.filter((movie) => movie._id !== findId(id)));
       })
       .catch((err) => console.log(err));
   }
@@ -173,8 +183,28 @@ const App = () => {
   }
 
   function searchMovieList(movieList) {
+      return movieList.filter(movie => {
+        if (searchValue === '') {
+          return (
+            shortMovieSwitch
+            ? (movie) && (isShortMovie(movie))
+            : movie
+          )
+        } else {
+          return (
+            shortMovieSwitch
+            ? (movie.nameRU.toLowerCase().includes(searchValue.toLowerCase())) && (isShortMovie(movie))
+            : movie.nameRU.toLowerCase().includes(searchValue.toLowerCase())
+          )
+        }
+      })
+    }
+    
+/*
+  function searchMovieList(movieList) {
     if (searchValue === '') {
       return movieList.filter(movie => {
+
         return (
           shortMovieSwitch
           ? (movie) && (isShortMovie(movie))
@@ -190,7 +220,7 @@ const App = () => {
         )
       })
     }
-  }
+  }*/
 
   useEffect(() => {
     tokenCheck();

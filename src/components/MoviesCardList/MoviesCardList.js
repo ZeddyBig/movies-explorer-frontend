@@ -23,15 +23,25 @@ function MoviesCardList(props) {
             {
                 (!props.isSavedMovies)
                 ? 
-                    showMoviesList(props.filteredMovies, props.handleSaveMovie, props.savedMovies, visibleMoviesCount)
+                    showMoviesList(
+                        props.filteredMovies,
+                        props.handleSaveMovie,
+                        props.handleDeleteMovie,
+                        props.savedMovies,
+                        visibleMoviesCount
+                    )
                 :
-                    showSavedMoviesList(props.searchMovieList(props.movies), props.handleDeleteMovie, props.savedMovies, visibleMoviesCount)
+                    showSavedMoviesList(
+                        props.searchMovieList(props.movies),
+                        props.handleDeleteMovie,
+                        props.savedMovies
+                    )
             }            
             </ul>
             <div className="movies-card-list__more">
                 {
                     visibleMoviesCount < ( props.isSavedMovies ? props.movies.length : props.filteredMovies.length) && (
-                    <button onClick={handleLoadMore} type="button" className={`movies-card-list__more-button`}>Ещё</button>
+                    <button onClick={handleLoadMore} type="button" className={`movies-card-list__more-button ${props.isSavedMovies ? 'movies-card-list__disable' : ''}`}>Ещё</button>
                 )}
                 
             </div>

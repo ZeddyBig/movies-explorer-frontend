@@ -2,7 +2,7 @@ import MoviesCard from "../components/MoviesCard/MoviesCard";
 import durationTransform from "./durationTransform";
 import checkSavedMovies from "./checkSavedMovies";
 
-const showMoviesList = (movies, handleSaveMovie, savedMovies, visibleMoviesCount) => {
+const showMoviesList = (movies, handleSaveMovie, handleDeleteMovie, savedMovies, visibleMoviesCount) => {
     return movies.slice(0, visibleMoviesCount).map((movie, index) => {
         movie.isSaved = checkSavedMovies(movie.id, savedMovies);
         return (
@@ -14,6 +14,7 @@ const showMoviesList = (movies, handleSaveMovie, savedMovies, visibleMoviesCount
                 movie={movie}
                 isSavedMovies={false}
                 handleSaveMovie={handleSaveMovie}
+                handleDeleteMovie={handleDeleteMovie}
             />
         )
     })    

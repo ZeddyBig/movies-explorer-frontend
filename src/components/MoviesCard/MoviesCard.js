@@ -4,19 +4,18 @@ import deleteMovieIcon from "../../images/delete-movie.svg"
 
 function MoviesCard({ thumbnail, title, duration, isSavedMovies,
     handleSaveMovie, movie, handleDeleteMovie }) {
-    
-    const [added, setAdded] = useState(movie.isSaved);
     const [icon, setIcon] = useState(movieAddedIcon);
 
     const handleSave = (e) => {
         e.preventDefault();
-        setAdded(true);
+        movie.isSaved = true;
         handleSaveMovie(movie);
     }
 
     const handleDelete = (e) => {
         e.preventDefault();
-        handleDeleteMovie(movie._id);
+        movie.isSaved = false;
+        isSavedMovies ? handleDeleteMovie(movie.movieId) : handleDeleteMovie(movie.id)
     }
     
     const mouseEnter = () => {
@@ -31,10 +30,10 @@ function MoviesCard({ thumbnail, title, duration, isSavedMovies,
         <li className="movies-card">
             <div className="movies-card__movie-container">
                 <a rel='noopener noreferrer' target='_blank' href={movie.trailerLink} className="movies-card__button_block">
-                    <button type="button" className={`movies-card__button ${ added ? `movies-card__disable` : ``}`} onClick={handleSave}>Сохранить</button>
-                    <img src={movieAddedIcon} alt="Фильм добавлен" className={`movies-card__added ${added ? `` : `movies-card__disable`}`} />
-                    <button type="button" onClick={!isSavedMovies ? ((e) => (e)) : handleDelete} className={`movies-card__delete-button ${added ? `` : `movies-card__disable`}`}>
-                        <img src={icon} onMouseEnter={!isSavedMovies ? ((e) => (e)) : mouseEnter} onMouseLeave={mouseLeave} alt={`Удалить фильм`} className={`movies-card__delete-button-img ${added ? `` : `movies-card__disable`}`}/>
+                    <button type="button" className={`movies-card__button ${ movie.isSaved ? `movies-card__disable` : ``}`} onClick={handleSave}>Сохранить</button>
+                    <img src={movieAddedIcon} alt="Фильм добавлен" className={`movies-card__added ${movie.isSaved ? `` : `movies-card__disable`}`} />
+                    <button type="button" onClick={handleDelete} className={`movies-card__delete-button ${movie.isSaved ? `` : `movies-card__disable`}`}>
+                        <img src={icon} onMouseEnter={mouseEnter} onMouseLeave={mouseLeave} alt={`Удалить фильм`} className={`movies-card__delete-button-img ${movie.isSaved ? `` : `movies-card__disable`}`}/>
                     </button>
                 </a>
                 <img className='movies-card__movie-img' src={thumbnail} alt='Карточка фильма' />
