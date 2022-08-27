@@ -1,4 +1,3 @@
-import { useState } from "react";
 import searchIcon from "../../images/search__icon.svg";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 
@@ -8,7 +7,7 @@ function SearchForm(props) {
         if (!props.isSavedMovies) {
             props.setFilteredMovies(props.searchMovieList(props.movies));
         } else {
-            props.searchSavedMovieList(props.movies);
+            props.searchMovieList(props.movies);
         }
     }
 

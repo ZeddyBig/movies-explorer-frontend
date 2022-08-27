@@ -17,9 +17,9 @@ function SavedMovies(props) {
                 shortMovieChange={props.shortMovieChange}
                 searchMovieList={props.searchMovieList}
                 searchValue={props.searchValue}
-                searchSavedMovieList={props.searchSavedMovieList}
             />
             <MoviesCardList
+                widthWindow={props.widthWindow}
                 filteredMovies={props.filteredMovies}
                 setFilteredMovies={props.setFilteredMovies}
                 isSavedMovies={props.isSavedMovies}
@@ -27,7 +27,7 @@ function SavedMovies(props) {
                 movies={props.movies}
                 searchMovieList={props.searchMovieList}
                 handleDeleteMovie={props.handleDeleteMovie}
-                searchSavedMovieList={props.searchSavedMovieList}
+                savedMovies={props.savedMovies}
             />
             <Footer />
         </main>

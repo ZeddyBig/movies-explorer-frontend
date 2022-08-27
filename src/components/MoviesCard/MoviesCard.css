@@ -28,6 +28,8 @@
 }
 
 .movies-card__button_block {
+    text-decoration: none;
+    color: #FFF;
     position: absolute;
     width: 360px;
     height: 201px;

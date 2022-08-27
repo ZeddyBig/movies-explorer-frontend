@@ -20,6 +20,7 @@ function Movies(props) {
                 searchValue={props.searchValue}
             />
             <MoviesCardList
+                widthWindow={props.widthWindow}
                 filteredMovies={props.filteredMovies}
                 setFilteredMovies={props.setFilteredMovies}
                 isMovies={props.isMovies}
@@ -28,6 +29,7 @@ function Movies(props) {
                 handleSaveMovie={props.handleSaveMovie}
                 searchMovieList={props.searchMovieList}
                 handleDeleteMovie={props.handleDeleteMovie}
+                savedMovies={props.savedMovies}
             />
             <Footer />
         </main>

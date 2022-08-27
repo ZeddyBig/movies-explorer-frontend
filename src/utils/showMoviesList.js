@@ -1,8 +1,10 @@
 import MoviesCard from "../components/MoviesCard/MoviesCard";
 import durationTransform from "./durationTransform";
+import checkSavedMovies from "./checkSavedMovies";
 
-const showMoviesList = (movies, handleSaveMovie) => {
-    return movies.map((movie, index) => {
+const showMoviesList = (movies, handleSaveMovie, savedMovies, visibleMoviesCount) => {
+    return movies.slice(0, visibleMoviesCount).map((movie, index) => {
+        movie.isSaved = checkSavedMovies(movie.id, savedMovies);
         return (
             <MoviesCard 
                 thumbnail={`https://api.nomoreparties.co${movie.image.formats.thumbnail.url}`}

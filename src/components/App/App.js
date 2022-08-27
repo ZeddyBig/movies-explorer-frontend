@@ -12,7 +12,7 @@ import { moviesApi } from '../../utils/MoviesApi';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import * as moviesAuth from '../../utils/moviesAuth';
 import ProtectedRoute from '../../utils/ProtectedRoute';
-import checkSavedMovies from '../../utils/checkSavedMovies';
+import useCurrentWidth from '../../utils/useCurrentWidth';
 
 const App = () => {
 
@@ -27,6 +27,7 @@ const App = () => {
   const [shortMovieSwitch, setShortMovieSwitch] = useState(false);
   const [savedMovies, setSavedMovies] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
+  const widthWindow = useCurrentWidth();
 
   const fetchMovies = () => {
     moviesApi.getMovies()
@@ -143,13 +144,13 @@ const App = () => {
     setLoggedIn(false);
     setName("");
     setEmail("");
-    history('/signin');
+    history('/');
   }
 
   const handleSaveMovie = (movie) => {
     mainApi.saveMovie(movie)
     .then((savedMovie) => {
-      setSavedMovies([savedMovie, ...savedMovies])
+      setSavedMovies([...savedMovies, savedMovie])
     })
     .catch((err) => console.log(err));
   }
@@ -171,30 +172,9 @@ const App = () => {
     )
   }
 
-  function searchSavedMovieList(movieList) {
-    if (searchValue === '') {
-      return movieList.filter(movie => {
-        return (
-          shortMovieSwitch
-          ? (movie) && (isShortMovie(movie))
-          : movie
-        )
-      })
-    } else {
-      return movieList.filter(movie => {
-        return (
-          shortMovieSwitch
-          ? (movie.nameRU.toLowerCase().includes(searchValue.toLowerCase())) && (isShortMovie(movie))
-          : movie.nameRU.toLowerCase().includes(searchValue.toLowerCase())
-        )
-      })
-    }
-  }
-
   function searchMovieList(movieList) {
     if (searchValue === '') {
       return movieList.filter(movie => {
-        movie.isSaved = checkSavedMovies(movie.id, savedMovies);
         return (
           shortMovieSwitch
           ? (movie) && (isShortMovie(movie))
@@ -203,7 +183,6 @@ const App = () => {
       })
     } else {
       return movieList.filter(movie => {
-        movie.isSaved = checkSavedMovies(movie.id, savedMovies);
         return (
           shortMovieSwitch
           ? (movie.nameRU.toLowerCase().includes(searchValue.toLowerCase())) && (isShortMovie(movie))
@@ -213,6 +192,7 @@ const App = () => {
     }
   }
 
+/*
   console.log(
     filteredMovies.map((movie) => (
       movie.isSaved
@@ -223,7 +203,7 @@ const App = () => {
     savedMovies.map((movieSaved) => (
       movieSaved.isSaved = true
     ))
-  );
+  );*/
 
   useEffect(() => {
     tokenCheck();
@@ -255,8 +235,8 @@ const App = () => {
                 movies={movies}
                 searchValue={searchValue}
                 setSearchValue={setSearchValue}
-                // Железно нужны
-                
+                savedMovies={savedMovies}
+                widthWindow={widthWindow}
                 shortMovieSwitch={shortMovieSwitch}
                 shortMovieChange={shortMovieChange}
                 handleSaveMovie={handleSaveMovie}
@@ -276,9 +256,8 @@ const App = () => {
                 movies={savedMovies}
                 searchValue={searchValue}
                 setSearchValue={setSearchValue}
-                searchSavedMovieList={searchSavedMovieList}
-                // Железно нужны
-                
+                savedMovies={savedMovies}
+                widthWindow={widthWindow}
                 shortMovieSwitch={shortMovieSwitch}
                 shortMovieChange={shortMovieChange}
                 searchMovieList={searchMovieList}
@@ -286,14 +265,14 @@ const App = () => {
               />
             </ProtectedRoute>
           } />
-          <Route path="/" element={
-            <Main isLoggedIn={loggedIn} isMain={true}/>
-          } />
           <Route path="/signup" element={
             <Register handleRegister={handleRegister} linkTo={"/signin"}/>
           } />
           <Route path="/signin" element={
             <Login handleLogin={handleLogin} linkTo={"/signup"} />
+          } />
+          <Route path="/" element={
+            <Main isLoggedIn={loggedIn} isMain={true}/>
           } />
           <Route path="*" element={
             <NotFound />
