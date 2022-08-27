@@ -67,7 +67,7 @@ const App = () => {
           fetchMovies();
         }
     }
-  }, [loggedIn]);
+  }, [loggedIn, currentUser.id]);
 
   savedMovies.map((movieSaved) => (
     movieSaved.isSaved = true
