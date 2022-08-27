@@ -3,7 +3,7 @@ import movieAddedIcon from "../../images/movie-added.svg";
 import deleteMovieIcon from "../../images/delete-movie.svg"
 
 function MoviesCard({ thumbnail, title, duration, isSavedMovies,
-    handleSaveMovie, movie, id, movies, handleDeleteMovie }) {
+    handleSaveMovie, movie, handleDeleteMovie }) {
     
     const [added, setAdded] = useState(movie.isSaved);
     const [icon, setIcon] = useState(movieAddedIcon);

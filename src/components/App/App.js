@@ -192,19 +192,6 @@ const App = () => {
     }
   }
 
-/*
-  console.log(
-    filteredMovies.map((movie) => (
-      movie.isSaved
-    ))
-  );
-
-  console.log(
-    savedMovies.map((movieSaved) => (
-      movieSaved.isSaved = true
-    ))
-  );*/
-
   useEffect(() => {
     tokenCheck();
   }, []);

@@ -29,6 +29,7 @@ const Login = (props) => {
                         className={`login__input login__input_email ${errors.email ? "login__input_error-switch" : ""}`}
                         type="email" 
                         name="email"
+                        value={formParams.email}
                         required
                         onChange={handleChange}
                     />

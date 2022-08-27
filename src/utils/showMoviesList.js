@@ -12,7 +12,6 @@ const showMoviesList = (movies, handleSaveMovie, savedMovies, visibleMoviesCount
                 duration={durationTransform(movie.duration)}
                 key={index}
                 movie={movie}
-                id={movie.id}
                 isSavedMovies={false}
                 handleSaveMovie={handleSaveMovie}
             />

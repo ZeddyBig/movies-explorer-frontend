@@ -9,6 +9,7 @@ const Register = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         let { name, email, password } = formParams;
+        email = email.toLowerCase();
         props.handleRegister({ name, email, password });
     }
     
@@ -30,8 +31,9 @@ const Register = (props) => {
                         type="text" 
                         name="name"
                         required 
-                        minLength="2"
+                        minLength="1"
                         maxLength="40"
+                        value={formParams.name}
                         onChange={handleChange}
                     />
                     { errors.name && (
@@ -42,6 +44,7 @@ const Register = (props) => {
                         className={`register__input register__input_email ${errors.email ? "register__input_error-switch" : ""}`}
                         type="email" 
                         name="email"
+                        value={formParams.email}
                         required
                         onChange={handleChange}
                     />

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 
 //хук управления формой и валидации формы
 export function useFormValidation() {
@@ -14,7 +14,14 @@ export function useFormValidation() {
   const handleChange = (event) => {
     const target = event.target;
     const name = target.name;
-    const value = target.value;
+    let value = target.value;
+    if (name === "name") {
+      value = value.replace(/[^a-zA-Zа-яА-ЯёЁ -]/ig,'');
+    }
+    if (name === "email") {
+      value = value.toLowerCase();
+    }
+    console.log(value);
     setValues({...values, [name]: value});
     setErrors({...errors, [name]: target.validationMessage });
     setIsValid(target.closest("form").checkValidity());
@@ -24,14 +31,5 @@ export function useFormValidation() {
     }));
   };
 
-  const resetForm = useCallback(
-    (newValues = {}, newErrors = {}, newIsValid = false) => {
-      setValues(newValues);
-      setErrors(newErrors);
-      setIsValid(newIsValid);
-    },
-    [setValues, setErrors, setIsValid]
-  );
-
-  return { values, handleChange, errors, formParams, isValid, resetForm };
+  return { values, handleChange, errors, formParams, isValid };
 }

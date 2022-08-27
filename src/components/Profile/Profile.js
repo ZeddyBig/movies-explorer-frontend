@@ -3,15 +3,16 @@ import Header from "../Common/Header/Header";
 import { useFormValidation } from '../../utils/useFormValidation';
 
 function Profile(props) {
-    let { handleChange, errors } = useFormValidation();
+    let { handleChange, errors, formParams } = useFormValidation();
     const [editMode, setEditMode] = useState(false);
     const nameInput = useRef();
     const emailInput = useRef();
     const [name, setName] = useState(props.name);
     const [email, setEmail] = useState(props.email);
+    const errorsList = (errors.name || errors.email || name === "" || email === "");
 
     function nameChange(e) {
-        setName(e.target.value);
+        setName(e.target.value.replace(/[^a-zA-Zа-яА-ЯёЁ -]/ig,''));
         handleChange(e);
     }       
     
@@ -37,12 +38,15 @@ function Profile(props) {
         emailInput.current.setAttribute("disabled", "");
     }
 
+    console.log("formParams.name: ", formParams.name);
+    console.log("name: ", name);
+
     return (
         <section className="profile">
             <Header isLoggedIn={props.isLoggedIn}/>
             <div className="profile__content">
                 <h1 className="profile__title">
-                    Привет, {name}!
+                    Привет, {(formParams.name) || name}!
                 </h1>
                 <form onSubmit={saveProfile} className="profile__form">
                     <div className="profile__info">
@@ -52,14 +56,14 @@ function Profile(props) {
                             </p>
                             <input 
                                 onChange={nameChange}
-                                value={name}
+                                value={(formParams.name) || name}
                                 disabled
                                 className="profile__info-value"
                                 ref={nameInput}
                                 type="text" 
                                 name="name"
                                 required 
-                                minLength="2"
+                                minLength="1"
                                 maxLength="40"
                             />
                         </div>
@@ -70,7 +74,7 @@ function Profile(props) {
                             </p>
                             <input 
                                 onChange={emailChange}
-                                value={email}
+                                value={(formParams.email) || email}
                                 disabled
                                 className="profile__info-value"
                                 ref={emailInput}
@@ -83,10 +87,10 @@ function Profile(props) {
                         </div>
                     </div>
                     <div className="profile__submit-block">
-                        { (errors.name || errors.email) && (
-                            <span className={`profile__error-message ${(errors.name || errors.email) ? '' : 'profile__disable'}`}>При обновлении профиля произошла ошибка</span>
+                        { errorsList && (
+                            <span className={`profile__error-message ${errorsList ? '' : 'profile__disable'}`}>При обновлении профиля произошла ошибка</span>
                         )}                        
-                        <button type="submit" disabled={(errors.name || errors.email) ? true : false} className={`profile__submit-button ${editMode ? '' : 'profile__disable'}`}>Сохранить</button>
+                        <button type="submit" disabled={errorsList ? true : false} className={`profile__submit-button ${editMode ? '' : 'profile__disable'}`}>Сохранить</button>
                     </div>
                     <div className={`profile__footer ${editMode ? 'profile__disable' : ''}`}>
                         <button type="button" className="profile__footer-button" onClick={editProfile}>Редактировать</button>
