@@ -33,7 +33,7 @@ function Header(props) {
                 <NavLink to="/profile" className={`header__account header__account_big ${(props.isLoggedIn || mobileMenuOpen) ? ``: `header__disable-block`}`}>Аккаунт</NavLink>
             </nav>
 
-            <div className={`header__menu-btn ${props.isMain ? `header__disable-block` : ``}`} ref={ref} onClick={handleClick}>
+            <div className={`header__menu-btn ${(props.isMain && !props.isLoggedIn) ? `header__disable-block` : ``}`} ref={ref} onClick={handleClick}>
                 <div className="header__menu-btn-burger"></div>
             </div>
 

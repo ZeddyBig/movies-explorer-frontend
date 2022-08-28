@@ -12,7 +12,6 @@ function Movies(props) {
                 setFilteredMovies={props.setFilteredMovies}
                 movies={props.movies}
                 setSearchValue={props.setSearchValue}
-                isSavedMovies={props.isSavedMovies}
                 shortMovieSwitch={props.shortMovieSwitch}
                 shortMovieChange={props.shortMovieChange}
                 searchMovieList={props.searchMovieList}

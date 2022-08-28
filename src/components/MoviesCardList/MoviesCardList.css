@@ -45,6 +45,7 @@
     border: 1px solid #424242;
     border-radius: 6px;
     background: none;
+    background-color: none;
     min-width: 320px;
     min-height: 36px;
     font-style: normal;
@@ -54,13 +55,14 @@
     align-items: center;
     text-align: center;
     color: #FFFFFF;
-    opacity: 1;
-    transition: opacity 0.5s ease;
+    transition: background-color 0.5s ease, color 0.5s ease, border 0.5s ease;
 }
 
 .movies-card-list__more-button:hover {
     cursor: pointer;
-    opacity: 0.7;
+    color: #202020;
+    background-color: #FFFFFF;
+    border: 1px solid #FFFFFF;
 }
 
 @media screen and (max-width: 1279px) {

@@ -13,7 +13,7 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import * as moviesAuth from '../../utils/moviesAuth';
 import ProtectedRoute from '../../utils/ProtectedRoute';
 import useCurrentWidth from '../../utils/useCurrentWidth';
-import checkSavedMovies from '../../utils/checkSavedMovies';
+import InfoTooltip from '../../components/InfoTooltip/InfoTooltip';
 
 const App = () => {
 
@@ -28,6 +28,7 @@ const App = () => {
   const [shortMovieSwitch, setShortMovieSwitch] = useState(false);
   const [savedMovies, setSavedMovies] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
+  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
   const widthWindow = useCurrentWidth();
 
   const fetchMovies = () => {
@@ -69,14 +70,6 @@ const App = () => {
     }
   }, [loggedIn, currentUser.id]);
 
-  savedMovies.map((movieSaved) => (
-    movieSaved.isSaved = true
-  ))
-
-  movies.map((movie) => (
-    movie.isSaved = checkSavedMovies(movie.id, savedMovies)
-  ))
-
   const handleRegister = ({ name, email, password }) => {
     return moviesAuth.register(name, email, password).then((res) => {
       if (res) {
@@ -84,15 +77,16 @@ const App = () => {
           success: true,
           message: "Вы успешно зарегистрировались!",
         });
+        setIsInfoTooltipOpen(true);
         history('/signin');
       }
     })
     .catch((err) => {
       setMessage({
         success: false,
-        message: "Что-то пошло не так! Попробуйте ещё раз.",
+        message: err.message,
       });
-      console.log(`err: ${err}`);
+      setIsInfoTooltipOpen(true);
     });
   }
 
@@ -130,7 +124,7 @@ const App = () => {
           success: false,
           message: "Что-то пошло не так! Попробуйте ещё раз.",
         });
-        console.log(`err: ${err}`);
+        setIsInfoTooltipOpen(true);
       });
   }
 
@@ -183,48 +177,30 @@ const App = () => {
   }
 
   function searchMovieList(movieList) {
-      return movieList.filter(movie => {
-        if (searchValue === '') {
-          return (
-            shortMovieSwitch
-            ? (movie) && (isShortMovie(movie))
-            : movie
-          )
-        } else {
-          return (
-            shortMovieSwitch
-            ? (movie.nameRU.toLowerCase().includes(searchValue.toLowerCase())) && (isShortMovie(movie))
-            : movie.nameRU.toLowerCase().includes(searchValue.toLowerCase())
-          )
-        }
-      })
-    }
-    
-/*
-  function searchMovieList(movieList) {
-    if (searchValue === '') {
-      return movieList.filter(movie => {
-
+    return movieList.filter(movie => {
+      if (searchValue === '') {
         return (
           shortMovieSwitch
           ? (movie) && (isShortMovie(movie))
           : movie
         )
-      })
-    } else {
-      return movieList.filter(movie => {
+      } else {
         return (
           shortMovieSwitch
           ? (movie.nameRU.toLowerCase().includes(searchValue.toLowerCase())) && (isShortMovie(movie))
           : movie.nameRU.toLowerCase().includes(searchValue.toLowerCase())
         )
-      })
-    }
-  }*/
+      }
+    })
+  }
 
   useEffect(() => {
     tokenCheck();
   }, []);
+
+  function closeInfoTooltip() {
+    setIsInfoTooltipOpen(false);
+  }
 
   return (
     <div className="App">
@@ -295,6 +271,7 @@ const App = () => {
             <NotFound />
           } />
         </Routes>
+        <InfoTooltip name={'info-tooltip'} isOpen={isInfoTooltipOpen} onClose={closeInfoTooltip} message={message.message} success={message.success}/>
       </CurrentUserContext.Provider>
     </div>
   );

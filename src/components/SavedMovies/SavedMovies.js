@@ -10,7 +10,6 @@ function SavedMovies(props) {
             <SearchForm 
                 setFilteredMovies={props.setFilteredMovies}
                 movies={props.movies}
-                isSavedMovies={props.isSavedMovies}
                 setSearchValue={props.setSearchValue}
                 shortMovieSwitch={props.shortMovieSwitch}
                 shortMovieChange={props.shortMovieChange}

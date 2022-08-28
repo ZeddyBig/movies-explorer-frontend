@@ -21,7 +21,6 @@ export function useFormValidation() {
     if (name === "email") {
       value = value.toLowerCase();
     }
-    console.log(value);
     setValues({...values, [name]: value});
     setErrors({...errors, [name]: target.validationMessage });
     setIsValid(target.closest("form").checkValidity());

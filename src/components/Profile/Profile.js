@@ -38,9 +38,6 @@ function Profile(props) {
         emailInput.current.setAttribute("disabled", "");
     }
 
-    console.log("formParams.name: ", formParams.name);
-    console.log("name: ", name);
-
     return (
         <section className="profile">
             <Header isLoggedIn={props.isLoggedIn}/>

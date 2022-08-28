@@ -4,11 +4,7 @@ import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 function SearchForm(props) {
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (!props.isSavedMovies) {
-            props.setFilteredMovies(props.searchMovieList(props.movies));
-        } else {
-            props.searchMovieList(props.movies);
-        }
+        props.setFilteredMovies(props.searchMovieList(props.movies));
     }
 
     const handleChange = (e) => {
