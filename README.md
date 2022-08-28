@@ -14,6 +14,4 @@
 
 **Посмотрите на мою работу сами!**
 
-Pull Request для проверяющего: https://github.com/ZeddyBig/movies-explorer-frontend/pull/3
-
 Frontend: https://zeddybig.diploma.nomoredomains.xyz/
