@@ -33,6 +33,7 @@ const Register = (props) => {
                         required 
                         minLength="1"
                         maxLength="40"
+                        autoComplete="off"
                         value={formParams.name}
                         onChange={handleChange}
                     />
@@ -46,6 +47,7 @@ const Register = (props) => {
                         name="email"
                         value={formParams.email}
                         required
+                        autoComplete="off"
                         onChange={handleChange}
                     />
                     { errors.email && (
@@ -56,6 +58,7 @@ const Register = (props) => {
                         className={`register__input register__input_password ${errors.password ? "register__input_error-switch" : ""}`}
                         type="password"
                         name="password"
+                        autoComplete="off"
                         required
                         onChange={handleChange}
                     />

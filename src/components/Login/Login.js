@@ -31,6 +31,7 @@ const Login = (props) => {
                         name="email"
                         value={formParams.email}
                         required
+                        autoComplete="off"
                         onChange={handleChange}
                     />
                     { errors.email && (
@@ -43,6 +44,7 @@ const Login = (props) => {
                         type="password"
                         name="password"
                         required
+                        autoComplete="off"
                         onChange={handleChange}
                     />
                     { errors.password && (

@@ -9,7 +9,11 @@ export function useFormValidation() {
     name: '',
     email: '',
     password: '',
-});
+  });
+
+  const params = {
+    email: formParams.email,
+  }
 
   const handleChange = (event) => {
     const target = event.target;
@@ -20,10 +24,18 @@ export function useFormValidation() {
     }
     if (name === "email") {
       value = value.toLowerCase();
+      params.email = value;
     }
     setValues({...values, [name]: value});
     setErrors({...errors, [name]: target.validationMessage });
-    setIsValid(target.closest("form").checkValidity());
+    if (name === "email") {
+      if ((params.email.match(/\w+@\w+\.[a-zа-яё]{2,5}$/)) === null) {
+        setErrors({...errors, [name]: "Неправильный формат почты"});
+      } 
+    }
+
+    setIsValid((target.closest("form").checkValidity()) && ((params.email.match(/\w+@\w+\.[a-zа-яё]{2,5}$/)) !== null));
+
     setFormParams((prev) => ({
       ...prev,
       [name]: value

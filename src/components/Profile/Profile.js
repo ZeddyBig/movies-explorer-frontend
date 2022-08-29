@@ -1,14 +1,16 @@
 import React, { useState, useRef } from "react";
 import Header from "../Common/Header/Header";
 import { useFormValidation } from '../../utils/useFormValidation';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function Profile(props) {
+    const currentUser = React.useContext(CurrentUserContext);
     let { handleChange, errors, formParams } = useFormValidation();
     const [editMode, setEditMode] = useState(false);
     const nameInput = useRef();
     const emailInput = useRef();
-    const [name, setName] = useState(props.name);
-    const [email, setEmail] = useState(props.email);
+    const [name, setName] = useState(currentUser.name);
+    const [email, setEmail] = useState(currentUser.email);
     const errorsList = (errors.name || errors.email || name === "" || email === "");
 
     function nameChange(e) {
@@ -87,7 +89,7 @@ function Profile(props) {
                         { errorsList && (
                             <span className={`profile__error-message ${errorsList ? '' : 'profile__disable'}`}>При обновлении профиля произошла ошибка</span>
                         )}                        
-                        <button type="submit" disabled={errorsList ? true : false} className={`profile__submit-button ${editMode ? '' : 'profile__disable'}`}>Сохранить</button>
+                        <button type="submit" disabled={(errorsList || name === currentUser.name || name === currentUser.email ) ? true : false} className={`profile__submit-button ${editMode ? '' : 'profile__disable'}`}>Сохранить</button>
                     </div>
                     <div className={`profile__footer ${editMode ? 'profile__disable' : ''}`}>
                         <button type="button" className="profile__footer-button" onClick={editProfile}>Редактировать</button>

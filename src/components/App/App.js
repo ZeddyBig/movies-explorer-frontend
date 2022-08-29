@@ -18,11 +18,9 @@ import InfoTooltip from '../../components/InfoTooltip/InfoTooltip';
 const App = () => {
 
   const [currentUser, setCurrentUser] = useState({});
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(undefined);
   const [message, setMessage] = useState({ success: false, message: "" });
   const history = useNavigate();
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
   const [movies, setMovies] = useState([]);
   const [searchValue, setSearchValue] = useState('');
   const [shortMovieSwitch, setShortMovieSwitch] = useState(false);
@@ -70,24 +68,26 @@ const App = () => {
     }
   }, [loggedIn, currentUser.id]);
 
+  console.log(loggedIn);
+
   const handleRegister = ({ name, email, password }) => {
-    return moviesAuth.register(name, email, password).then((res) => {
-      if (res) {
+    return moviesAuth.register(name, email, password)
+      .then((res) => {
+        if (res) {
+          setMessage({
+            success: true,
+            message: "Вы успешно зарегистрировались!",
+          });
+          handleLogin({email, password});
+        }
+      })
+      .catch((err) => {
         setMessage({
-          success: true,
-          message: "Вы успешно зарегистрировались!",
+          success: false,
+          message: err.message,
         });
         setIsInfoTooltipOpen(true);
-        history('/signin');
-      }
-    })
-    .catch((err) => {
-      setMessage({
-        success: false,
-        message: err.message,
       });
-      setIsInfoTooltipOpen(true);
-    });
   }
 
   const tokenCheck = () => {
@@ -96,15 +96,11 @@ const App = () => {
       moviesAuth.getContent(jwt)
         .then((data) => {
           if (data){
-            let userData = {
-              name: data.name,
-              email: data.email
-            }
             setLoggedIn(true);
-            setName(userData.name);
-            setEmail(userData.email);
             setCurrentUser(data);
-            history("/movies");
+          } else {
+            setLoggedIn(false);
+            history.push('/signin');
           }
         })
         .catch((err) => console.log(`err: ${err}`));
@@ -117,6 +113,7 @@ const App = () => {
         if (data.token) {
           localStorage.setItem('jwt', data.token);
           tokenCheck();
+          history("/movies");
         }
       })
       .catch((err) => {
@@ -132,8 +129,6 @@ const App = () => {
     mainApi.updateUserData(obj)
       .then((res) => {
         setCurrentUser(res);
-        setName(obj.name);
-        setEmail(obj.email);
       })
       .catch((err) => console.log(err));
   }
@@ -141,8 +136,6 @@ const App = () => {
   const signOut = () => {
     localStorage.removeItem('jwt');
     setLoggedIn(false);
-    setName("");
-    setEmail("");
     history('/');
   }
 
@@ -211,8 +204,6 @@ const App = () => {
               <Profile 
                 isLoggedIn={loggedIn}
                 handleLogout={signOut}
-                name={name}
-                email={email}
                 handleEdit={handleEdit}
               />
             </ProtectedRoute>
