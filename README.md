@@ -14,7 +14,7 @@
 
 **Посмотрите на мою работу сами!**
 
-Pull Request для проверяющего: https://github.com/ZeddyBig/movies-explorer-frontend/pull/4
+Pull Request для проверяющего: https://github.com/ZeddyBig/movies-explorer-frontend/pull/5
 
 Макет Figma: https://www.figma.com/file/ENkuAOZAjPuAZXE0vxiKka/Diploma-(Copy)?node-id=932%3A3593
 

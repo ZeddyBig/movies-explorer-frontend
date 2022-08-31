@@ -1,5 +1,4 @@
 import MoviesCard from "../components/MoviesCard/MoviesCard";
-import transformDuration from "./transformDuration";
 import checkSavedMovies from "./checkSavedMovies";
 
 const showSavedMoviesList = (movies, handleDeleteMovie, savedMovies) => {
@@ -9,7 +8,7 @@ const showSavedMoviesList = (movies, handleDeleteMovie, savedMovies) => {
             <MoviesCard
                 thumbnail={movie.thumbnail}
                 title={movie.nameRU}
-                duration={transformDuration(movie.duration)}
+                duration={movie.duration}
                 key={index}
                 movie={movie}
                 isSavedMovies={true}

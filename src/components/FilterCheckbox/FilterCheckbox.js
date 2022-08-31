@@ -3,7 +3,14 @@ import React from 'react';
 function FilterCheckbox(props) {
     const handleChange = (e) => {
         const { checked } = e.target;
-        props.shortMovieChange(checked);
+        if (props.isSavedMovies) {
+            props.setShortMovieSwitchSaved(checked);
+        } else {
+            localStorage.setItem('checked-movies', checked);
+            props.setShortMovieSwitch(checked);
+            props.setFilteredMovies(props.searchMovieShort(props.movies));
+            localStorage.setItem('filtered-movies', JSON.stringify(props.searchMovieShort(props.movies)));
+        }
     }
 
     return (
@@ -12,7 +19,7 @@ function FilterCheckbox(props) {
                 className='filterCheckbox__input'
                 type='checkbox'
                 id='shortMovie'
-                checked={props.shortMovieSwitch}
+                checked={props.isSavedMovies ? props.shortMovieSwitchSaved : props.shortMovieSwitch}
                 onChange={handleChange}
             />
             <p className='filterCheckbox__label'>Короткометражки</p>

@@ -1,5 +1,4 @@
 import MoviesCard from "../components/MoviesCard/MoviesCard";
-import transformDuration from "./transformDuration";
 import checkSavedMovies from "./checkSavedMovies";
 
 const showMoviesList = (movies, handleSaveMovie, handleDeleteMovie, savedMovies, visibleMoviesCount) => {
@@ -9,7 +8,7 @@ const showMoviesList = (movies, handleSaveMovie, handleDeleteMovie, savedMovies,
             <MoviesCard 
                 thumbnail={`https://api.nomoreparties.co${movie.image.formats.thumbnail.url}`}
                 title={movie.nameRU}
-                duration={transformDuration(movie.duration)}
+                duration={movie.duration}
                 key={index}
                 movie={movie}
                 isSavedMovies={false}
@@ -17,7 +16,7 @@ const showMoviesList = (movies, handleSaveMovie, handleDeleteMovie, savedMovies,
                 handleDeleteMovie={handleDeleteMovie}
             />
         )
-    })    
+    })
 }
 
 export default showMoviesList;

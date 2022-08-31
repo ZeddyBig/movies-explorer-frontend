@@ -11,11 +11,13 @@ function Movies(props) {
             <SearchForm
                 setFilteredMovies={props.setFilteredMovies}
                 movies={props.movies}
+                isSavedMovies={props.isSavedMovies}
                 setSearchValue={props.setSearchValue}
                 shortMovieSwitch={props.shortMovieSwitch}
-                shortMovieChange={props.shortMovieChange}
+                setShortMovieSwitch={props.setShortMovieSwitch}
                 searchMovieList={props.searchMovieList}
                 searchValue={props.searchValue}
+                searchMovieShort={props.searchMovieShort}
             />
             <MoviesCardList
                 widthWindow={props.widthWindow}
@@ -28,6 +30,7 @@ function Movies(props) {
                 searchMovieList={props.searchMovieList}
                 handleDeleteMovie={props.handleDeleteMovie}
                 savedMovies={props.savedMovies}
+                searchMovieShort={props.searchMovieShort}
             />
             <Footer />
         </main>

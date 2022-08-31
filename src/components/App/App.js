@@ -21,11 +21,18 @@ const App = () => {
   const [loggedIn, setLoggedIn] = useState(undefined);
   const [message, setMessage] = useState({ success: false, message: "" });
   const history = useNavigate();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [movies, setMovies] = useState([]);
+  const [savedMovies, setSavedMovies] = useState([]);
+  /* --- Для поиска по разделу фильмов --- */
+  const [filteredMovies, setFilteredMovies] = useState([]);
   const [searchValue, setSearchValue] = useState('');
   const [shortMovieSwitch, setShortMovieSwitch] = useState(false);
-  const [savedMovies, setSavedMovies] = useState([]);
-  const [filteredMovies, setFilteredMovies] = useState([]);
+  /* --- Для поиска по разделу сохранённых фильмов --- */
+  const [searchValueSaved, setSearchValueSaved] = useState('');
+  const [shortMovieSwitchSaved, setShortMovieSwitchSaved] = useState(false);
+
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
   const widthWindow = useCurrentWidth();
 
@@ -47,11 +54,12 @@ const App = () => {
         .catch((err) => console.log(err));
         
         mainApi.getSavedMovies()
-          .then((savedMovies) => {
-            setSavedMovies(savedMovies);
+          .then((movies) => {
+            setSavedMovies(movies);
             setSavedMovies((state) => state.filter((movie) => movie.owner === currentUser.id));
+            localStorage.setItem('saved-movies', JSON.stringify(savedMovies));
           })
-          .catch((err) => console.log(err)); 
+          .catch((err) => console.log(err));
 
         const localMovies = localStorage.getItem('movies');
         if (localMovies) {
@@ -65,10 +73,33 @@ const App = () => {
         } else {
           fetchMovies();
         }
+
+        /* --- MOVIES PART --- */
+
+        const localFiltredMovies = localStorage.getItem('filtered-movies');
+        if (localFiltredMovies !== null) {
+          setFilteredMovies(JSON.parse(localFiltredMovies));
+        } else {
+          setFilteredMovies([]);
+        }
+        
+        const localSearchValue = localStorage.getItem('search-value-movies');
+        if (localSearchValue !== null) {
+          setSearchValue(localSearchValue);
+        } else {
+          localStorage.setItem('search-value-movies', '');
+          setSearchValue('');
+        }
+
+        const localCheckMovies = localStorage.getItem('checked-movies');
+        if (localCheckMovies !== null) {
+            setShortMovieSwitch(JSON.parse(localCheckMovies));
+        } else {
+          localStorage.setItem('checked-movies', false);
+            setShortMovieSwitch(false);
+        }     
     }
   }, [loggedIn, currentUser.id]);
-
-  console.log(loggedIn);
 
   const handleRegister = ({ name, email, password }) => {
     return moviesAuth.register(name, email, password)
@@ -98,6 +129,8 @@ const App = () => {
           if (data){
             setLoggedIn(true);
             setCurrentUser(data);
+            setName(data.name);
+            setEmail(data.email);
           } else {
             setLoggedIn(false);
             history.push('/signin');
@@ -111,8 +144,8 @@ const App = () => {
     return moviesAuth.authorize(email, password)
       .then((data) => {
         if (data.token) {
-          localStorage.setItem('jwt', data.token);
           tokenCheck();
+          localStorage.setItem('jwt', data.token);
           history("/movies");
         }
       })
@@ -129,12 +162,32 @@ const App = () => {
     mainApi.updateUserData(obj)
       .then((res) => {
         setCurrentUser(res);
+        setName(obj.name);
+        setEmail(obj.email);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => 
+      {
+        console.log(err);
+        setMessage({
+          success: false,
+          message: 'Введённый емейл занят',
+        });
+        setIsInfoTooltipOpen(true);
+      });
   }
 
   const signOut = () => {
     localStorage.removeItem('jwt');
+    localStorage.removeItem('checked-movies');
+    localStorage.removeItem('search-value-movies');
+    localStorage.removeItem('filtered-movies');
+    localStorage.removeItem('movies');
+    localStorage.removeItem('saved-movies');
+    setMovies([]);
+    setSavedMovies([]);
+    setFilteredMovies([]);
+    setSearchValue('');
+    setShortMovieSwitch(false);
     setLoggedIn(false);
     history('/');
   }
@@ -160,28 +213,63 @@ const App = () => {
       .catch((err) => console.log(err));
   }
 
-  const shortMovieChange = (e) => {
-    return e ? setShortMovieSwitch(true) : setShortMovieSwitch(false)
-  }
   const isShortMovie = (movie) => {
     return (
       movie.duration <= 40 ? true : false
     )
   }
 
+  function searchMovieShort(movieList) {
+    localStorage.setItem('search-value-movies', searchValue);
+    return movieList.filter(movie => {
+      if (searchValue === '') {
+        localStorage.setItem('search-value-movies', '');
+        return (
+          false
+        )
+      } else {
+        return (
+          !shortMovieSwitch
+            ? (movie.nameRU.toLowerCase().includes(searchValue.toLowerCase())) && (isShortMovie(movie))
+            : movie.nameRU.toLowerCase().includes(searchValue.toLowerCase())
+        )
+      }
+    })
+  }
+
   function searchMovieList(movieList) {
     return movieList.filter(movie => {
       if (searchValue === '') {
         return (
-          shortMovieSwitch
+          false
+          /* --- Оставляю тут на случай, если при пустом значени поиска нужно будет вывести вообще все фильмы --- */
+          /*shortMovieSwitch
           ? (movie) && (isShortMovie(movie))
-          : movie
+          : movie*/
         )
       } else {
         return (
           shortMovieSwitch
           ? (movie.nameRU.toLowerCase().includes(searchValue.toLowerCase())) && (isShortMovie(movie))
           : movie.nameRU.toLowerCase().includes(searchValue.toLowerCase())
+        )
+      }
+    })
+  }
+
+  function searchSavedMovieList(movieList) {
+    return movieList.filter(movie => {
+      if (searchValueSaved === '') {
+        return (
+          shortMovieSwitchSaved
+          ? (movie) && (isShortMovie(movie))
+          : movie
+        )
+      } else {
+        return (
+          shortMovieSwitchSaved
+          ? (movie.nameRU.toLowerCase().includes(searchValueSaved.toLowerCase())) && (isShortMovie(movie))
+          : movie.nameRU.toLowerCase().includes(searchValueSaved.toLowerCase())
         )
       }
     })
@@ -205,6 +293,8 @@ const App = () => {
                 isLoggedIn={loggedIn}
                 handleLogout={signOut}
                 handleEdit={handleEdit}
+                name={name}
+                email={email}
               />
             </ProtectedRoute>
           } />
@@ -222,10 +312,11 @@ const App = () => {
                 savedMovies={savedMovies}
                 widthWindow={widthWindow}
                 shortMovieSwitch={shortMovieSwitch}
-                shortMovieChange={shortMovieChange}
+                setShortMovieSwitch={setShortMovieSwitch}
                 handleSaveMovie={handleSaveMovie}
                 searchMovieList={searchMovieList}
                 handleDeleteMovie={handleDeleteMovie}
+                searchMovieShort={searchMovieShort}
               />
             </ProtectedRoute>
           } />
@@ -235,17 +326,15 @@ const App = () => {
                 isLoggedIn={loggedIn}
                 isMovies={false}
                 isSavedMovies={true}
-                filteredMovies={filteredMovies}
-                setFilteredMovies={setFilteredMovies}
                 movies={savedMovies}
-                searchValue={searchValue}
-                setSearchValue={setSearchValue}
+                searchValueSaved={searchValueSaved}
+                setSearchValueSaved={setSearchValueSaved}
                 savedMovies={savedMovies}
                 widthWindow={widthWindow}
-                shortMovieSwitch={shortMovieSwitch}
-                shortMovieChange={shortMovieChange}
-                searchMovieList={searchMovieList}
+                searchSavedMovieList={searchSavedMovieList}
                 handleDeleteMovie={handleDeleteMovie}
+                shortMovieSwitchSaved={shortMovieSwitchSaved}
+                setShortMovieSwitchSaved={setShortMovieSwitchSaved}
               />
             </ProtectedRoute>
           } />

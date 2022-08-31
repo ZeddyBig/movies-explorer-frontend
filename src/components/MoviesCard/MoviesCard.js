@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import movieAddedIcon from "../../images/movie-added.svg";
 import deleteMovieIcon from "../../images/delete-movie.svg"
+import transformDuration from "../../utils/transformDuration";
 
 function MoviesCard({ thumbnail, title, duration, isSavedMovies,
     handleSaveMovie, movie, handleDeleteMovie }) {
@@ -40,7 +41,7 @@ function MoviesCard({ thumbnail, title, duration, isSavedMovies,
             </div>
             <div className='movies-card__movie-description'>
                 <h2 className='movies-card__movie-title'>{title}</h2>
-                <p className='movies-card__movie-duration'>{duration}</p>
+                <p className='movies-card__movie-duration'>{transformDuration(duration)}</p>
             </div>
         </li>
     )

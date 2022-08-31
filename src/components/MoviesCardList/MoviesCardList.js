@@ -3,7 +3,7 @@ import Preloader from "../Preloader/Preloader";
 import showMoviesList from "../../utils/showMoviesList";
 import showSavedMoviesList from "../../utils/showSavedMoviesList";
 import { getMoreStep, getInitialCount } from '../../utils/getMoreStep';
-import { movieLength } from "../../utils/movieLength";
+import { setMessageMovieLength } from "../../utils/setMessageMovieLength";
 
 function MoviesCardList(props) {
     useEffect(() => {
@@ -29,7 +29,7 @@ function MoviesCardList(props) {
                 : 
                 <div className="movies-card-list__after-preloader">
                     {
-                        movieLength(props.isSavedMovies, props.filteredMovies, props.searchMovieList, props.movies)
+                        setMessageMovieLength(props.isSavedMovies, props.filteredMovies, props.searchSavedMovieList, props.movies)
                     }
                     <ul className="movies-card-list__list">
                     {
@@ -44,7 +44,7 @@ function MoviesCardList(props) {
                             )
                         :
                             showSavedMoviesList(
-                                props.searchMovieList(props.movies),
+                                props.searchSavedMovieList(props.movies),
                                 props.handleDeleteMovie,
                                 props.savedMovies
                             )
