@@ -14,6 +14,7 @@ import * as moviesAuth from '../../utils/moviesAuth';
 import ProtectedRoute from '../../utils/ProtectedRoute';
 import useCurrentWidth from '../../utils/useCurrentWidth';
 import InfoTooltip from '../../components/InfoTooltip/InfoTooltip';
+import { SHORT_MOVIE_TIME } from '../../utils/constants';
 
 const App = () => {
 
@@ -215,7 +216,7 @@ const App = () => {
 
   const isShortMovie = (movie) => {
     return (
-      movie.duration <= 40 ? true : false
+      movie.duration <= SHORT_MOVIE_TIME ? true : false
     )
   }
 
