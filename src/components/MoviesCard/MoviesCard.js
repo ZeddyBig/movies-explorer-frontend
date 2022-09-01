@@ -19,11 +19,11 @@ function MoviesCard({ thumbnail, title, duration, isSavedMovies,
         isSavedMovies ? handleDeleteMovie(movie.movieId) : handleDeleteMovie(movie.id)
     }
     
-    const mouseEnter = () => {
+    const handleMouseEnter = () => {
         setIcon(deleteMovieIcon);
     }
 
-    const mouseLeave = () => {
+    const handleMouseLeave = () => {
         setIcon(movieAddedIcon);
     }
 
@@ -34,7 +34,7 @@ function MoviesCard({ thumbnail, title, duration, isSavedMovies,
                     <button type="button" className={`movies-card__button ${ movie.isSaved ? `movies-card__disable` : ``}`} onClick={handleSave}>Сохранить</button>
                     <img src={movieAddedIcon} alt="Фильм добавлен" className={`movies-card__added ${movie.isSaved ? `` : `movies-card__disable`} ${isSavedMovies ? 'movies-card__disable' : ''}`} />
                     <button type="button" onClick={handleDelete} className={`movies-card__delete-button ${movie.isSaved ? `` : `movies-card__disable`}`}>
-                        <img src={isSavedMovies ? deleteMovieIcon : icon} onMouseEnter={mouseEnter} onMouseLeave={mouseLeave} alt={`Удалить фильм`} className={`movies-card__delete-button-img ${movie.isSaved ? `` : `movies-card__disable`}`}/>
+                        <img src={isSavedMovies ? deleteMovieIcon : icon} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} alt={`Удалить фильм`} className={`movies-card__delete-button-img ${movie.isSaved ? `` : `movies-card__disable`}`}/>
                     </button>
                 </a>
                 <img className='movies-card__movie-img' src={thumbnail} alt='Карточка фильма' />

@@ -6,8 +6,10 @@ import { getMoreStep, getInitialCount } from '../../utils/getMoreStep';
 import { setMessageMovieLength } from "../../utils/setMessageMovieLength";
 
 function MoviesCardList(props) {
+
     useEffect(() => {
         setLoading(true)
+        props.setSearchValueSaved('')
         setTimeout(() => {
             setLoading(false)
         }, 1000)
@@ -29,7 +31,7 @@ function MoviesCardList(props) {
                 : 
                 <div className="movies-card-list__after-preloader">
                     {
-                        setMessageMovieLength(props.isSavedMovies, props.filteredMovies, props.searchSavedMovieList, props.movies)
+                        setMessageMovieLength(props.isSavedMovies, props.filteredMovies, props.searchSavedMovieList, props.movies, props.searchValueIsSet)
                     }
                     <ul className="movies-card-list__list">
                     {

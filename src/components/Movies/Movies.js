@@ -31,6 +31,8 @@ function Movies(props) {
                 handleDeleteMovie={props.handleDeleteMovie}
                 savedMovies={props.savedMovies}
                 searchMovieShort={props.searchMovieShort}
+                searchValueIsSet={props.searchValueIsSet}
+                setSearchValueSaved={props.setSearchValueSaved}
             />
             <Footer />
         </main>

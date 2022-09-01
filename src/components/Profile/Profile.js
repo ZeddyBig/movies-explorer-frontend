@@ -19,12 +19,12 @@ function Profile(props) {
         setEmail(currentStateUser.email);
     }, [currentStateUser]);
 
-    function nameChange(e) {
+    function changeName(e) {
         setName(e.target.value.replace(/[^a-zA-Zа-яА-ЯёЁ -]/ig,''));
         handleChange(e);
     }       
     
-    function emailChange(e) {
+    function changeEmail(e) {
         setEmail(e.target.value);
         handleChange(e);
     }
@@ -60,7 +60,7 @@ function Profile(props) {
                                 Имя
                             </p>
                             <input 
-                                onChange={nameChange}
+                                onChange={changeName}
                                 value={(formParams.name) || name}
                                 disabled
                                 className="profile__info-value"
@@ -78,7 +78,7 @@ function Profile(props) {
                                 E-mail
                             </p>
                             <input 
-                                onChange={emailChange}
+                                onChange={changeEmail}
                                 value={(formParams.email) || email}
                                 disabled
                                 className="profile__info-value"

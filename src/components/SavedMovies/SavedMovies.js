@@ -24,6 +24,7 @@ function SavedMovies(props) {
                 searchSavedMovieList={props.searchSavedMovieList}
                 handleDeleteMovie={props.handleDeleteMovie}
                 savedMovies={props.savedMovies}
+                setSearchValueSaved={props.setSearchValueSaved}
             />
             <Footer />
         </main>

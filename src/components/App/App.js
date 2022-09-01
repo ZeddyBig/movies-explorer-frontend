@@ -29,6 +29,7 @@ const App = () => {
   /* --- Для поиска по разделу фильмов --- */
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [searchValue, setSearchValue] = useState('');
+  const [searchValueIsSet, setSearchValueIsSet] = useState(false);
   const [shortMovieSwitch, setShortMovieSwitch] = useState(false);
   /* --- Для поиска по разделу сохранённых фильмов --- */
   const [searchValueSaved, setSearchValueSaved] = useState('');
@@ -122,7 +123,7 @@ const App = () => {
       });
   }
 
-  const tokenCheck = () => {
+  const checkToken = () => {
     if (localStorage.getItem('jwt')){
       const jwt = localStorage.getItem('jwt');
       moviesAuth.getContent(jwt)
@@ -132,6 +133,7 @@ const App = () => {
             setCurrentUser(data);
             setName(data.name);
             setEmail(data.email);
+            history("/movies");
           } else {
             setLoggedIn(false);
             history.push('/signin');
@@ -146,8 +148,7 @@ const App = () => {
       .then((data) => {
         if (data.token) {
           localStorage.setItem('jwt', data.token);
-          tokenCheck();
-          history("/movies");
+          checkToken();
         }
       })
       .catch((err) => {
@@ -165,6 +166,11 @@ const App = () => {
         setCurrentUser(res);
         setName(obj.name);
         setEmail(obj.email);
+        setMessage({
+          success: true,
+          message: 'Вы успешно изменили профиль',
+        });
+        setIsInfoTooltipOpen(true);
       })
       .catch((err) => 
       {
@@ -177,7 +183,9 @@ const App = () => {
       });
   }
 
-  const signOut = () => {
+  console.log(document.cookie);
+
+  const handleLogout = () => {
     localStorage.removeItem('jwt');
     localStorage.removeItem('checked-movies');
     localStorage.removeItem('search-value-movies');
@@ -189,6 +197,7 @@ const App = () => {
     setFilteredMovies([]);
     setSearchValue('');
     setShortMovieSwitch(false);
+    setSearchValueIsSet(false);
     setLoggedIn(false);
     history('/');
   }
@@ -225,10 +234,12 @@ const App = () => {
     return movieList.filter(movie => {
       if (searchValue === '') {
         localStorage.setItem('search-value-movies', '');
+        setSearchValueIsSet(false);
         return (
           false
         )
       } else {
+        setSearchValueIsSet(true);
         return (
           !shortMovieSwitch
             ? (movie.nameRU.toLowerCase().includes(searchValue.toLowerCase())) && (isShortMovie(movie))
@@ -241,6 +252,7 @@ const App = () => {
   function searchMovieList(movieList) {
     return movieList.filter(movie => {
       if (searchValue === '') {
+        setSearchValueIsSet(false);
         return (
           false
           /* --- Оставляю тут на случай, если при пустом значени поиска нужно будет вывести вообще все фильмы --- */
@@ -249,6 +261,7 @@ const App = () => {
           : movie*/
         )
       } else {
+        setSearchValueIsSet(true);
         return (
           shortMovieSwitch
           ? (movie.nameRU.toLowerCase().includes(searchValue.toLowerCase())) && (isShortMovie(movie))
@@ -277,7 +290,7 @@ const App = () => {
   }
 
   useEffect(() => {
-    tokenCheck();
+    checkToken();
   }, []);
 
   function closeInfoTooltip() {
@@ -292,7 +305,7 @@ const App = () => {
             <ProtectedRoute loggedIn={loggedIn}>
               <Profile 
                 isLoggedIn={loggedIn}
-                handleLogout={signOut}
+                handleLogout={handleLogout}
                 handleEdit={handleEdit}
                 name={name}
                 email={email}
@@ -318,6 +331,8 @@ const App = () => {
                 searchMovieList={searchMovieList}
                 handleDeleteMovie={handleDeleteMovie}
                 searchMovieShort={searchMovieShort}
+                searchValueIsSet={searchValueIsSet}
+                setSearchValueSaved={setSearchValueSaved}
               />
             </ProtectedRoute>
           } />
