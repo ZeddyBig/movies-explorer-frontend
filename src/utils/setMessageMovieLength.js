@@ -5,7 +5,7 @@ export function setMessageMovieLength(isSavedMovies, filteredMovies, searchSaved
         )
     } else {
         return (
-            <div className={`movies-card-list_zero ${filteredMovies.length ? 'movies-card-list__disable': ``}`}>{`${ localStorage.getItem('search-value-movies').length ? `Фильмы не найдены` : `Нужно ввести ключевое слово`}`}</div>
+            <div className={`movies-card-list_zero ${filteredMovies.length ? 'movies-card-list__disable': ``}`}>{`${ (localStorage.getItem('search-value-movies').length !== null) ? `Фильмы не найдены` : `Нужно ввести ключевое слово`}`}</div>
         )
     }
 }
