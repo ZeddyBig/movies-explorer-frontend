@@ -145,8 +145,8 @@ const App = () => {
     return moviesAuth.authorize(email, password)
       .then((data) => {
         if (data.token) {
-          tokenCheck();
           localStorage.setItem('jwt', data.token);
+          tokenCheck();
           history("/movies");
         }
       })
