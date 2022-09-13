@@ -14,4 +14,10 @@
 
 **Посмотрите на мою работу сами!**
 
-Frontend: https://zeddybig.diploma.nomoredomains.xyz/
+Pull Request для проверяющего: https://github.com/ZeddyBig/movies-explorer-frontend/pull/5
+
+Макет Figma: https://www.figma.com/file/ENkuAOZAjPuAZXE0vxiKka/Diploma-(Copy)?node-id=932%3A3593
+
+Frontend: https://zeddybig.diploma.nomoredomains.sbs/
+
+Backend: https://api.zeddybig.diploma.nomoredomains.xyz/

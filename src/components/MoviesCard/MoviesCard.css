@@ -14,6 +14,7 @@
 .movies-card__movie-img {
     width: 100%;
     height: 100%;
+    background-color: #25262A;
     object-fit: cover;
     border-radius: 6px;
 }
@@ -27,6 +28,8 @@
 }
 
 .movies-card__button_block {
+    text-decoration: none;
+    color: #FFF;
     position: absolute;
     width: 360px;
     height: 201px;

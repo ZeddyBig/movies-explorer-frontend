@@ -17,7 +17,7 @@ function Portfolio() {
                     <div className="portfolio__line"/>
                 </li>
                 <li className="portfolio__element">
-                    <a rel='noopener noreferrer' target='_blank' href="https://github.com/ZeddyBig/how-to-learn" className="portfolio__link">
+                    <a rel='noopener noreferrer' target='_blank' href="https://github.com/ZeddyBig/russian-travel" className="portfolio__link">
                         <h3 className="portfolio__name">
                             Адаптивный сайт
                         </h3>
@@ -28,7 +28,7 @@ function Portfolio() {
                     <div className="portfolio__line"/>
                 </li>
                 <li className="portfolio__element">
-                    <a rel='noopener noreferrer' target='_blank' href="https://github.com/ZeddyBig/how-to-learn" className="portfolio__link">
+                    <a rel='noopener noreferrer' target='_blank' href="https://github.com/ZeddyBig/react-mesto-api-full" className="portfolio__link">
                         <h3 className="portfolio__name">
                             Одностраничное приложение
                         </h3>
